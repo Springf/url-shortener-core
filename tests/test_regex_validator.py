@@ -7,6 +7,8 @@ def test_url_correct():
     assert regex_validator.validate('yahoo.com')
     assert regex_validator.validate('https://www.abc.com/foo/?bar=baz&inga=42&quux')
     assert regex_validator.validate('http://abc.com:8080')
+    assert regex_validator.validate('http://localhost:8080')
+    assert regex_validator.validate('http://localhost:5000/HNy77Ygn')
     assert regex_validator.validate('http://a.b-c.de')
     assert regex_validator.validate('http://a.b_c.de')
     assert regex_validator.validate('https://github.com/Springf%3Ftab%3Drepositories')
@@ -23,6 +25,9 @@ def test_url_wrong():
     assert regex_validator.validate('1234567') == False
     assert regex_validator.validate('abcdefg') == False
     assert regex_validator.validate('http://#') == False
+    assert regex_validator.validate('http://google') == False
+    assert regex_validator.validate('http://invalid') == False
+    assert regex_validator.validate('http://google:8888') == False
     assert regex_validator.validate('http://3628126748') == False
     assert regex_validator.validate('hddp://3628126748') == False
     assert regex_validator.validate('tcp://yahoo.com') == False

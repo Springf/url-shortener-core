@@ -81,3 +81,6 @@ def test_api_update():
 
     assert s.update(f'http://{url}'[0:9] + '0', url, '') == False
     assert s.update(f'http://{url}'[0:9] + '0', url, 'user')
+
+    with pytest.raises(ValueError):
+        assert s.update(f'http://{url}'[0:9] + '0', '', 'user')

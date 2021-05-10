@@ -17,14 +17,15 @@ class Shortener():
         if self.__validator(url):
             if '://' not in url:
                 url = f'{self.__default_protocol}{url}'
-            shortened_str = self.__shortener(url)
+            input_url = f'{url}{user}'
+            shortened_str = self.__shortener(input_url)
             # 3 is an arbitrary number here to prevent collision
             i = 0
             while not self.__store.add(shortened_str, url, user):
                 if i == 3:
                     raise ValueError('Failed to shorten the URL.')
                 i += 1
-                shortened_str = self.__shortener(url, i)
+                shortened_str = self.__shortener(input_url, i)
         else:
             raise ValueError("URL is invalid.")    
 
@@ -39,9 +40,11 @@ class Shortener():
         return url
     
     def update(self, shortened_str, url, user) -> bool:
+        if url.endswith(shortened_str):
+            raise ValueError('Short URL and Original URL cannot be the same.')
         if self.__validator(url):
             if '://' not in url:
                 url = f'{self.__default_protocol}{url}'
             return self.__store.update(shortened_str, url, user)
-        return False    
-        
+        else:
+            raise ValueError("URL is invalid.") 

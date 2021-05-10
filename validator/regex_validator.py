@@ -6,5 +6,5 @@ In real world more sophisticated approach could be taken like checking against a
 """
 
 def validate(url:str) -> bool:
-    pattern = r'^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\._]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$'
+    pattern = r'^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?(?:localhost(:[0-9]{1,5})?(\/.*)?|[a-z0-9]+([\-\._]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?)$'
     return re.search(pattern, url) is not None

@@ -17,7 +17,9 @@ The backend store is not implemented. The consumer application should implement 
 
 ## Test
 The code is tested with python 3.8+.
+
 To setup the project, assumed python is installed.
+
 Clone the project and create python venv:
 ```
 git clone https://github.com/Springf/url-shortener-core.git
@@ -25,9 +27,13 @@ cd url-shortener-core
 python -m venv venv
 ```
 Activate the venv:
+
 Windows `venv\Scripts\activate.bat`
+
 Linux `source venv/bin/activate`
+
 Install the package: `pip install -r requirements.txt`
+
 Run unit tests: `pytest tests`
 
 ## Applications

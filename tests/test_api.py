@@ -2,6 +2,7 @@ import api
 from store.store import Store
 import pytest
 
+#mock the shortener, store and validator
 def mock_shortener(url, retry=0):
     if len(url) < 10:
         return f'{url}{retry}'

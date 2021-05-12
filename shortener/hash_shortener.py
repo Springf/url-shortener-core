@@ -3,7 +3,8 @@ import base64
 
 """
 Implements a basic shortener algorithem use the SHA256 hash function and truncate to 8 characters in base64.
-Because base64 packs more bits in a single character than Hex representation, we got slightly more collission resistance here.
+Because base64 packs more bits in a single character than Hex representation, 
+the result has higher entropy and we got slightly more collission resistance.
 Remove the special chars from the base64 encoding for URL safety.
 """
 

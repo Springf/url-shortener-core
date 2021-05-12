@@ -1,9 +1,6 @@
 class Shortener():
     """
-    The shortner API provides three functions, create, retrive and update shortened URLs.
-    For short URL creation, it will validate and create, then store it, if a collision is found, re-try for three times before throw error.
-    For retrieving original URL, if not found, throw error.
-    For update a shortened URL's original URL, only the URL's creator can update it.
+    The shortner API provides three functions, create, retrive and update shortened URL token.
     """
     def __init__(self, shortener, store, validator) -> None:
         self.__shortener = shortener
@@ -14,14 +11,22 @@ class Shortener():
     def create(self, url, user = '') -> str:
         shortened_str = ''
         
+        #use the validator to validate the original URL
         if self.__validator(url):
+            #add default protocol
             if '://' not in url:
                 url = f'{self.__default_protocol}{url}'
+
+            #for each user we will create a differnt short URL token
             input_url = f'{url}{user}'
+
+            #create using the shortener function
             shortened_str = self.__shortener(input_url)
-            # 3 is an arbitrary number here to prevent collision
+
             i = 0
+            #try store the pair, if got collision, re-create by adding a trailing number
             while not self.__store.add(shortened_str, url, user):
+                #3 is an arbitrary number here to prevent collision, if SHA256 bits are evenly distributed, the chance of collision is very low
                 if i == 3:
                     raise ValueError('Failed to shorten the URL.')
                 i += 1
@@ -40,9 +45,11 @@ class Shortener():
         return url
     
     def update(self, shortened_str, url, user) -> bool:
+        #basic check to ensure no infinite redirection
         if url.endswith(shortened_str):
             raise ValueError('Short URL and Original URL cannot be the same.')
         if self.__validator(url):
+            #add default protocol
             if '://' not in url:
                 url = f'{self.__default_protocol}{url}'
             return self.__store.update(shortened_str, url, user)
